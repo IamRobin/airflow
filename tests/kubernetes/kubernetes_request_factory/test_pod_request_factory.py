@@ -60,6 +60,11 @@ class TestPodRequestFactory(unittest.TestCase):
             security_context={
                 'runAsUser': 1000,
                 'fsGroup': 2000,
+            },
+            container_security_context={
+                'capabilities': {
+                    'add': ['NET_ADMIN']
+                }
             }
         )
         self.maxDiff = None
@@ -117,6 +122,13 @@ class TestPodRequestFactory(unittest.TestCase):
                             'cpu': 2,
                             'nvidia.com/gpu': 1
                         },
+                    },
+                    'securityContext': {
+                        'capabilities': {
+                            'add': [
+                                'NET_ADMIN'
+                            ]
+                        }
                     },
                     'ports': [{'name': 'foo', 'containerPort': 1234}],
                     'volumeMounts': [{

@@ -92,6 +92,10 @@ class KubernetesPodOperator(BaseOperator):
     :type is_delete_operator_pod: bool
     :param hostnetwork: If True enable host networking on the pod
     :type hostnetwork: bool
+    :param security_context: A dict containing securityContext for the pod
+    :type security_context: dict
+    :param container_security_context: A dict containing securityContext for the container
+    :type container_security_context: dict
     :param tolerations: A list of kubernetes tolerations
     :type tolerations: list tolerations
     :param configmaps: A list of configmap names objects that we
@@ -141,6 +145,7 @@ class KubernetesPodOperator(BaseOperator):
             pod.tolerations = self.tolerations
             pod.configmaps = self.configmaps
             pod.security_context = self.security_context
+            pod.container_security_context = self.container_security_context
             pod.pod_runtime_info_envs = self.pod_runtime_info_envs
             pod.dnspolicy = self.dnspolicy
 
@@ -202,6 +207,7 @@ class KubernetesPodOperator(BaseOperator):
                  tolerations=None,
                  configmaps=None,
                  security_context=None,
+                 container_security_context=None,
                  pod_runtime_info_envs=None,
                  dnspolicy=None,
                  *args,
@@ -238,5 +244,6 @@ class KubernetesPodOperator(BaseOperator):
         self.tolerations = tolerations or []
         self.configmaps = configmaps or []
         self.security_context = security_context or {}
+        self.container_security_context = container_security_context or {}
         self.pod_runtime_info_envs = pod_runtime_info_envs or []
         self.dnspolicy = dnspolicy

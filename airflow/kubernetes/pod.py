@@ -77,6 +77,8 @@ class Pod:
     :type tolerations: list
     :param security_context: A dict containing the security context for the pod
     :type security_context: dict
+    :param container_security_context: A dict containing the security context for the container
+    :type container_security_context: dict
     :param configmaps: A list containing names of configmaps object
         mounting env variables to the pod
     :type configmaps: list[str]
@@ -111,6 +113,7 @@ class Pod:
             hostnetwork=False,
             tolerations=None,
             security_context=None,
+            container_security_context=None,
             configmaps=None,
             pod_runtime_info_envs=None,
             dnspolicy=None
@@ -138,6 +141,7 @@ class Pod:
         self.hostnetwork = hostnetwork or False
         self.tolerations = tolerations or []
         self.security_context = security_context
+        self.container_security_context = container_security_context
         self.configmaps = configmaps or []
         self.pod_runtime_info_envs = pod_runtime_info_envs or []
         self.dnspolicy = dnspolicy

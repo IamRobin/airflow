@@ -229,6 +229,11 @@ class KubernetesRequestFactory(metaclass=ABCMeta):
             req['spec']['securityContext'] = pod.security_context
 
     @staticmethod
+    def extract_container_security_context(pod, req):
+        if pod.container_security_context:
+            req['spec']['containers'][0]['securityContext'] = pod.container_security_context
+
+    @staticmethod
     def _apply_env_from(pod, req):
         envs_from_secrets = [
             env for env in pod.secrets if env.deploy_type == 'env' and env.key is None

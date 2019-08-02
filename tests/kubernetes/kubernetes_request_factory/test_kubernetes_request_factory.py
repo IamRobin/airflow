@@ -343,6 +343,19 @@ class TestKubernetesRequestFactory(unittest.TestCase):
         KubernetesRequestFactory.extract_security_context(pod, self.input_req)
         self.assertEqual(self.input_req, self.expected)
 
+    def test_extract_container_security_context(self):
+        container_security_context = {
+            'capabilities': {
+                'add': [
+                    'NET_ADMIN'
+                ]
+            }
+        }
+        pod = Pod('v3.14', {}, [], container_security_context=container_security_context)
+        self.expected['spec']['containers'][0]['securityContext'] = container_security_context
+        KubernetesRequestFactory.extract_container_security_context(pod, self.input_req)
+        self.assertEqual(self.input_req, self.expected)
+
     @parameterized.expand([
         'extract_resources',
         'extract_init_containers',
